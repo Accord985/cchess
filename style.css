@@ -1,0 +1,45 @@
+#board {
+  width: 428px;
+  height: 478px;
+  /* credits given to www.postermywall.com/ for the wooden background */
+  background: center / 86% no-repeat url("./img/board.svg"), center/contain url("./img/background.jpg");
+  padding: 23.9px 21.4px;
+  border-radius: 1%;
+  box-shadow: 7px 7px 5px burlywood;
+  border: 3px ridge burlywood;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#board > div {
+  cursor: pointer;
+  width: calc(100% / 9);
+  height: 10%;
+}
+
+#board > div:nth-child(2n) {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+#board > div:nth-child(2n-1) {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+#board > div > div {
+  width: 90%;
+  height: 90%;
+  line-height: 100%;
+  margin: 5% 0 0 5%;
+  background: center / contain url("./img/piece.jpg");
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#board > div > div > span {
+  color: red;
+  font-family: 隶书;
+  font-size: 30px;
+}
