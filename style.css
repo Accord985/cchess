@@ -1,45 +1,100 @@
 #board {
-  width: 428px;
-  height: 478px;
+  width: 450px;
+  height: 500px;
   /* credits given to www.postermywall.com/ for the wooden background */
-  background: center / 86% no-repeat url("./img/board.svg"), center/contain url("./img/background.jpg");
-  padding: 23.9px 21.4px;
+  background: center/contain url("./img/background.jpg");
+  padding: 30px 27px;
   border-radius: 1%;
   box-shadow: 7px 7px 5px burlywood;
   border: 3px ridge burlywood;
-  box-sizing: border-box;
+}
+
+#squares {
+  width: 450px;
+  height: 500px;
   display: flex;
   flex-wrap: wrap;
+  position: absolute;
+  z-index: 0;
 }
 
-#board > div {
-  cursor: pointer;
-  width: calc(100% / 9);
-  height: 10%;
+#squares > div {
+  width: 50px;
+  height: 50px;
 }
 
-#board > div:nth-child(2n) {
-  background-color: rgba(0, 0, 255, 0.2);
+#squares > div:hover {
+  box-shadow: inset 5px 5px purple, inset -5px -5px purple;
+  /* filter: brightness(100%); */
 }
 
-#board > div:nth-child(2n-1) {
-  background-color: rgba(0, 255, 0, 0.2);
+/* #pieces > div:hover {
+  border: 3px purple solid;
+} */
+
+#pieces {
+  position: absolute;
+  z-index: 1;
 }
 
-#board > div > div {
-  width: 90%;
-  height: 90%;
-  line-height: 100%;
-  margin: 5% 0 0 5%;
+#pieces > div {
+  width: 50px;
+  height: 50px;
+  line-height: 44.7px;
+  font-size: 35px;
   background: center / contain url("./img/piece.jpg");
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 3px chocolate solid;
+  box-sizing: border-box;
+  position: absolute;
+  text-align: center;
+  transform: scale(0.9);
+  transition: 0.2s linear;
+  box-shadow: 3px 3px 7px black;
+  cursor: pointer;
+  user-select: none;
 }
 
-#board > div > div > span {
-  color: red;
-  font-family: 隶书;
-  font-size: 30px;
+#pieces > div {
+  /* font-family: 方正行楷_GBK; */
+  font-family: 方正刘炳森隶书 简繁;
+  /* font-family: 文鼎超颜楷简繁; */
+}
+
+#pieces > div.team-1 {color: red;}
+#pieces > div.team-2 {color: black;}
+#pieces > div.team-3 {color: green;}
+
+#pieces > div.rank-1 {top: 450px;}
+#pieces > div.rank-2 {top: 400px;}
+#pieces > div.rank-3 {top: 350px;}
+#pieces > div.rank-4 {top: 300px;}
+#pieces > div.rank-5 {top: 250px;}
+#pieces > div.rank-6 {top: 200px;}
+#pieces > div.rank-7 {top: 150px;}
+#pieces > div.rank-8 {top: 100px;}
+#pieces > div.rank-9 {top: 50px;}
+#pieces > div.rank-10 {top: 0px;}
+
+#pieces > div.file-9 {left: 0px}
+#pieces > div.file-8 {left: 50px}
+#pieces > div.file-7 {left: 100px}
+#pieces > div.file-6 {left: 150px}
+#pieces > div.file-5 {left: 200px}
+#pieces > div.file-4 {left: 250px}
+#pieces > div.file-3 {left: 300px}
+#pieces > div.file-2 {left: 350px}
+#pieces > div.file-1 {left: 400px}
+
+#pieces > div.selected {
+  box-shadow: 5px 5px 12px black;
+  transform: scale(0.95);
+}
+
+#pieces > div.captured {
+  display: none;
+}
+
+#pieces:not(:has(.selected)) > div.rival {
+  cursor: not-allowed;
 }

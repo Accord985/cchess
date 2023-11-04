@@ -1,0 +1,174 @@
+/*
+  the layout of the board is as follows (90 blocks, centered by pieces):
+          f9   f8   f7   f6   f5   f4   f3   f2   f1
+    r10  1.00 2.00 2.00 3.00 4.00 3.75 2.00 2.00 1.75
+    r09  2.25 5.00 5.00 6.00 7.00 6.50 5.00 5.00 2.75
+    r08  2.25 8.00 5.00 9.00 6.25 9.25 5.00 8.00 2.75
+    r07  10.0 5.00 8.00 5.00 8.00 5.00 8.00 5.00 10.5
+    r06  11.0 12.0 12.0 12.0 12.0 12.0 12.0 12.0 11.5
+    r05  11.0 12.5 12.5 12.5 12.5 12.5 12.5 12.5 11.5
+    r04  10.0 5.00 8.00 5.00 8.00 5.00 8.00 5.00 10.5
+    r03  2.25 8.00 5.00 9.75 6.75 9.50 5.00 8.00 2.75
+    r02  2.25 5.00 5.00 6.00 7.00 6.50 5.00 5.00 2.75
+    r01  1.25 2.50 2.50 3.25 4.50 3.50 2.50 2.50 1.50
+  note:
+    Each number has 2 parts: the integer part is the type of pattern, and the
+    decimal part is the number of rotation counterclockwise.
+    12 patterns: Check the chessboard at integer positions.
+    For example, 2.75 is Pattern 2 rotated 270° (0.75 revolution);
+      12.5 is Pattern 12 rotated 180° (0.5 revolution);
+      8.00 is Pattern 8 without rotation.
+    In HTML file, the id of each block is the rank number followed by file number,
+      like this: 6-4 (rank 6 file 4); 10-3 (rank 10 file 3)
+*/
+
+#square10-9 {
+  background: center/cover url("./img/board/board1.svg");
+}
+
+#square1-9 {
+  background: center/cover url("./img/board/board1-90.svg");
+}
+
+#square1-1 {
+  background: center/cover url("./img/board/board1-180.svg");
+}
+
+#square10-1 {
+  background: center/cover url("./img/board/board1-270.svg");
+}
+
+#square10-8, #square10-7, #square10-3, #square10-2 {
+  background: center/cover url("./img/board/board2.svg");
+}
+
+#square2-9, #square3-9, #square8-9, #square9-9 {
+  background: center/cover url("./img/board/board2-90.svg");
+}
+
+#square1-8, #square1-7, #square1-3, #square1-2 {
+  background: center/cover url("./img/board/board2-180.svg");
+}
+
+#square2-1, #square3-1, #square8-1, #square9-1 {
+  background: center/cover url("./img/board/board2-270.svg");
+}
+
+#square10-6 {
+  background: center/cover url("./img/board/board3.svg");
+}
+
+#square1-6 {
+  background: center/cover url("./img/board/board3-90.svg");
+}
+
+#square1-4 {
+  background: center/cover url("./img/board/board3-180.svg");
+}
+
+#square10-4 {
+  background: center/cover url("./img/board/board3-270.svg");
+}
+
+#square10-5 {
+  background: center/cover url("./img/board/board4.svg");
+}
+
+#square1-5 {
+  background: center/cover url("./img/board/board4-180.svg");
+}
+
+/* 29-8732 38-73 47-8642 */
+#square9-8, #square9-7, #square9-3, #square9-2, #square8-7, #square8-3,
+#square2-8, #square2-7, #square2-3, #square2-2, #square3-7, #square3-3,
+#square7-8, #square7-6, #square7-4, #square7-2, #square4-8, #square4-6,
+#square4-4, #square4-2 {
+  background: center/cover url("./img/board/board5.svg");
+}
+
+#square9-6, #square2-6 {
+  background: center/cover url("./img/board/board6.svg");
+}
+
+#square8-5 {
+  background: center/cover url("./img/board/board6-90.svg");
+}
+
+#square9-4, #square2-4 {
+  background: center/cover url("./img/board/board6-180.svg");
+}
+
+#square3-5 {
+  background: center/cover url("./img/board/board6-270.svg");
+}
+
+#square2-5, #square9-5 {
+  background: center/cover url("./img/board/board7.svg");
+}
+
+/* 83-82 74-753 */
+#square8-8, #square8-2, #square3-8, #square3-2, #square7-7,
+#square7-5, #square7-3, #square4-7, #square4-5, #square4-3 {
+  background: center/cover url("./img/board/board8.svg");
+}
+
+#square8-6 {
+  background: center/cover url("./img/board/board9.svg");
+}
+
+#square8-4 {
+  background: center/cover url("./img/board/board9-90.svg");
+}
+
+#square3-4 {
+  background: center/cover url("./img/board/board9-180.svg");
+}
+
+#square3-6 {
+  background: center/cover url("./img/board/board9-270.svg");
+}
+
+#square7-9, #square4-9 {
+  background: center/cover url("./img/board/board10.svg");
+}
+
+#square7-1, #square4-1 {
+  background: center/cover url("./img/board/board10-180.svg");
+}
+
+#square6-9, #square5-9 {
+  background: center/cover url("./img/board/board11.svg");
+}
+
+#square6-1, #square5-1 {
+  background: center/cover url("./img/board/board11-180.svg");
+}
+
+#square6-8, #square6-7, #square6-6, #square6-5, #square6-4, #square6-3, #square6-2 {
+  background: center/cover url("./img/board/board12.svg");
+}
+
+#square5-8, #square5-7, #square5-6, #square5-5, #square5-4, #square5-3, #square5-2 {
+  background: center/cover url("./img/board/board12-180.svg");
+}
+
+
+
+#board > article {
+  position: absolute;
+  top: 265px;
+  left: 125px;
+  width: 275px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 0;
+}
+
+#board > article > span {
+  line-height: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 方正字迹-海体楷书繁体, 华文新魏, 隶书, 宋体, sans-serif;
+  user-select: none;
+}
