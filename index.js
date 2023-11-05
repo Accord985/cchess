@@ -19,7 +19,7 @@
     for (let i = 0; i < pieces.length; i++) {
       pieces[i].addEventListener('click', selectPiece);
     }
-    let positions = qsa("#squares > div")
+    let positions = qsa("#squares > div");
     for (let i = 0; i < positions.length; i++) {
       positions[i].addEventListener('click', selectSquare);
     }
@@ -51,20 +51,27 @@
       }
     } else {
       let coordinate = getCoordinates(evt.target);
-      let rank = Math.floor(coordinate / 10);
-      let file = coordinate % 10;
       if (qs('.selected') && verified) {
         evt.target.classList.add('captured');
-        moveSelected(rank, file);
+        moveSelected(coordinate[0], coordinate[1]);
       }
     }
   }
 
   function selectSquare(evt) {
-    let squareCoord = evt.target.id.substring(6).split('-');
-    let squareRank = parseInt(squareCoord[0]);
-    let squareFile = parseInt(squareCoord[1]);
-    let pieceInPos = qs(".rank-"+squareRank+".file-"+squareFile);
+    let squareRank = -1;
+    let squareFile = -1;
+    let pieceInPos = null;
+    if (evt.target.id !== "mark-1" && evt.target.id !== "mark-2") {
+      let squareCoord = evt.target.id.substring(6).split('-');
+      squareRank = parseInt(squareCoord[0]);
+      squareFile = parseInt(squareCoord[1]);
+    } else {
+      let squareCoord = getCoordinates(evt.target);
+      squareRank = squareCoord[0];
+      squareFile = squareCoord[1];
+    }
+    pieceInPos = qs("#pieces > .rank-"+squareRank+".file-"+squareFile);
     if (qs('.selected')) {
       if (pieceInPos) {
         if (pieceInPos.classList.contains('rival')) {
@@ -99,19 +106,30 @@
     if (file <= 0 || rank <= 0 || file > 9 || rank > 10) {
       throw new Error('Illegal piece position');
     }
-    return rank * 10 + file;
+    return [rank, file];
   }
 
   function moveSelected(rank, file) {
     let previous = qs('.selected');
-    for (let i = 1; i <= 10; i++) {
-      previous.classList.remove('file-'+i); // no file-10 but it's fine
-      previous.classList.remove('rank-'+i);
-    }
-    previous.classList.add('file-'+file);
-    previous.classList.add('rank-'+rank);
-    previous.classList.remove('selected');
+    let previousPos = getCoordinates(previous);
+    let markA = id("mark-1");
+    let markAPos = getCoordinates(markA);
+    let markB = id("mark-2");
+    let markBPos = getCoordinates(markB);
+
+    previous.classList.replace('file-'+previousPos[1], 'file-'+file);
+    previous.classList.replace('rank-'+previousPos[0], 'rank-'+rank);
+    markA.classList.replace('file-'+markAPos[1], 'file-'+previousPos[1]);
+    markA.classList.replace('rank-'+markAPos[0], 'rank-'+previousPos[0]);
+    markB.classList.add('hidden');
+    setTimeout(() => {
+      previous.classList.remove('selected');
+      markB.classList.remove('hidden');
+      markB.classList.replace('file-'+markBPos[1], 'file-'+file);
+      markB.classList.replace('rank-'+markBPos[0], 'rank-'+rank);
+    }, 200);
   }
+
 
   /**
    * Returns the element that has the ID attribute with the specified value.

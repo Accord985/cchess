@@ -1,6 +1,13 @@
-#board {
+#board, #squares, #board > article {
   width: 450px;
   height: 500px;
+}
+
+#board > section, #board > article, #mark-1, #mark-2 {
+  position: absolute;
+}
+
+#board {
   /* credits given to www.postermywall.com/ for the wooden background */
   background: center/contain url("./img/background.jpg");
   padding: 30px 27px;
@@ -9,13 +16,29 @@
   border: 3px ridge burlywood;
 }
 
+#board > article {
+  top: 265px;
+  left: 125px;
+  width: 275px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 0;
+}
+
+#board > article > span {
+  line-height: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 方正字迹-海体楷书繁体, 华文新魏, 隶书, 宋体, sans-serif;
+  user-select: none;
+}
+
 #squares {
-  width: 450px;
-  height: 500px;
   display: flex;
   flex-wrap: wrap;
   position: absolute;
-  z-index: 0;
+  z-index: 1;
 }
 
 #squares > div {
@@ -25,15 +48,9 @@
 
 #squares > div:hover {
   box-shadow: inset 5px 5px purple, inset -5px -5px purple;
-  /* filter: brightness(100%); */
 }
 
-/* #pieces > div:hover {
-  border: 3px purple solid;
-} */
-
 #pieces {
-  position: absolute;
   z-index: 1;
 }
 
@@ -50,7 +67,7 @@
   text-align: center;
   transform: scale(0.9);
   transition: 0.2s linear;
-  box-shadow: 3px 3px 7px black;
+  filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.6));
   cursor: pointer;
   user-select: none;
 }
@@ -65,34 +82,43 @@
 #pieces > div.team-2 {color: black;}
 #pieces > div.team-3 {color: green;}
 
-#pieces > div.rank-1 {top: 450px;}
-#pieces > div.rank-2 {top: 400px;}
-#pieces > div.rank-3 {top: 350px;}
-#pieces > div.rank-4 {top: 300px;}
-#pieces > div.rank-5 {top: 250px;}
-#pieces > div.rank-6 {top: 200px;}
-#pieces > div.rank-7 {top: 150px;}
-#pieces > div.rank-8 {top: 100px;}
-#pieces > div.rank-9 {top: 50px;}
-#pieces > div.rank-10 {top: 0px;}
+#board div.rank-1 {top: 450px;}
+#board div.rank-2 {top: 400px;}
+#board div.rank-3 {top: 350px;}
+#board div.rank-4 {top: 300px;}
+#board div.rank-5 {top: 250px;}
+#board div.rank-6 {top: 200px;}
+#board div.rank-7 {top: 150px;}
+#board div.rank-8 {top: 100px;}
+#board div.rank-9 {top: 50px;}
+#board div.rank-10 {top: 0px;}
 
-#pieces > div.file-9 {left: 0px}
-#pieces > div.file-8 {left: 50px}
-#pieces > div.file-7 {left: 100px}
-#pieces > div.file-6 {left: 150px}
-#pieces > div.file-5 {left: 200px}
-#pieces > div.file-4 {left: 250px}
-#pieces > div.file-3 {left: 300px}
-#pieces > div.file-2 {left: 350px}
-#pieces > div.file-1 {left: 400px}
+#board div.file-9 {left: 0px}
+#board div.file-8 {left: 50px}
+#board div.file-7 {left: 100px}
+#board div.file-6 {left: 150px}
+#board div.file-5 {left: 200px}
+#board div.file-4 {left: 250px}
+#board div.file-3 {left: 300px}
+#board div.file-2 {left: 350px}
+#board div.file-1 {left: 400px}
 
 #pieces > div.selected {
-  box-shadow: 5px 5px 12px black;
+  filter: drop-shadow(15px 15px 9px rgba(0,0,0,0.4));
   transform: scale(0.95);
+  z-index: 2;
 }
 
-#pieces > div.captured {
+#pieces > div.captured, .hidden {
   display: none;
+}
+
+#mark-1 {
+  background: center/50% url("./img/board/mark-dot.svg") no-repeat;
+}
+
+#mark-2 {
+  background: center/100% url("./img/board/mark-piece.svg") no-repeat;
 }
 
 #pieces:not(:has(.selected)) > div.rival {

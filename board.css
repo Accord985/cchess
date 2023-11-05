@@ -21,6 +21,9 @@
     In HTML file, the id of each block is the rank number followed by file number,
       like this: 6-4 (rank 6 file 4); 10-3 (rank 10 file 3)
 */
+#squares > div {
+  box-sizing: border-box;
+}
 
 #square10-9 {
   background: center/cover url("./img/board/board1.svg");
@@ -150,25 +153,4 @@
 
 #square5-8, #square5-7, #square5-6, #square5-5, #square5-4, #square5-3, #square5-2 {
   background: center/cover url("./img/board/board12-180.svg");
-}
-
-
-
-#board > article {
-  position: absolute;
-  top: 265px;
-  left: 125px;
-  width: 275px;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 0;
-}
-
-#board > article > span {
-  line-height: 50px;
-  font-size: 30px;
-  font-weight: bold;
-  font-family: 方正字迹-海体楷书繁体, 华文新魏, 隶书, 宋体, sans-serif;
-  user-select: none;
 }
