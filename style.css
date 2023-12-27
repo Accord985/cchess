@@ -105,7 +105,7 @@
 
 #pieces > div.selected {
   filter: drop-shadow(15px 15px 9px rgba(0,0,0,0.4));
-  transform: scale(0.95);
+  transform: rotateX(15deg);
   z-index: 2;
 }
 
@@ -123,4 +123,15 @@
 
 #pieces:not(:has(.selected)) > div.rival {
   cursor: not-allowed;
+}
+
+#board > p {
+  position: absolute;
+  z-index: 1;
+
+}
+
+.top-num {
+  top: 0;
+
 }
