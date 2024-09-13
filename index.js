@@ -19,7 +19,7 @@
     for (let i = 0; i < pieces.length; i++) {
       pieces[i].addEventListener('click', selectPiece);
     }
-    let positions = qsa("#squares > div");
+    let positions = qsa("#board > div");
     for (let i = 0; i < positions.length; i++) {
       positions[i].addEventListener('click', selectSquare);
     }
@@ -28,7 +28,7 @@
   // rank: 10th=0-8; 9th=9-17
   // file: 1=8,17,...; 2=7,16,...
   function populateBoard() {
-    let board = id('squares');
+    let board = id('board');
     for (let i = 0; i < 90; i++) {
       let newItem = gen('div');
       let rank = 10 - Math.floor(i / 9);
@@ -59,19 +59,10 @@
   }
 
   function selectSquare(evt) {
-    let squareRank = -1;
-    let squareFile = -1;
-    let pieceInPos = null;
-    if (evt.target.id !== "mark-1" && evt.target.id !== "mark-2") {
-      let squareCoord = evt.target.id.substring(6).split('-');
-      squareRank = parseInt(squareCoord[0]);
-      squareFile = parseInt(squareCoord[1]);
-    } else {
-      let squareCoord = getCoordinates(evt.target);
-      squareRank = squareCoord[0];
-      squareFile = squareCoord[1];
-    }
-    pieceInPos = qs("#pieces > .rank-"+squareRank+".file-"+squareFile);
+    let squareCoord = evt.target.id.substring(6).split('-');
+    let squareRank = parseInt(squareCoord[0]);
+    let squareFile = parseInt(squareCoord[1]);
+    let pieceInPos = qs(`#pieces > .rank-${squareRank}.file-${squareFile}`);
     if (qs('.selected')) {
       if (pieceInPos) {
         if (pieceInPos.classList.contains('rival')) {
@@ -112,21 +103,21 @@
   function moveSelected(rank, file) {
     let previous = qs('.selected');
     let previousPos = getCoordinates(previous);
-    let markA = id("mark-1");
-    let markAPos = getCoordinates(markA);
-    let markB = id("mark-2");
-    let markBPos = getCoordinates(markB);
+    if (qs(".markDot")) {
+      qs(".markDot").classList.remove("markDot");
+    }
+    if (qs(".markRing")) {
+      qs(".markRing").classList.remove("markRing");
+    }
+    // no dot no ring: put the dot and ring.
+    // dot and ring: remove previous dot and ring and add new.
 
     previous.classList.replace('file-'+previousPos[1], 'file-'+file);
     previous.classList.replace('rank-'+previousPos[0], 'rank-'+rank);
-    markA.classList.replace('file-'+markAPos[1], 'file-'+previousPos[1]);
-    markA.classList.replace('rank-'+markAPos[0], 'rank-'+previousPos[0]);
-    markB.classList.add('hidden');
+    id(`square${previousPos[0]}-${previousPos[1]}`).classList.add("markDot");
     setTimeout(() => {
       previous.classList.remove('selected');
-      markB.classList.remove('hidden');
-      markB.classList.replace('file-'+markBPos[1], 'file-'+file);
-      markB.classList.replace('rank-'+markBPos[0], 'rank-'+rank);
+      id(`square${rank}-${file}`).classList.add("markRing");
     }, 200);
   }
 

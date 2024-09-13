@@ -1,19 +1,28 @@
-#board, #squares, #board > article {
-  width: 450px;
-  height: 500px;
-}
-
 #board > section, #board > article, #mark-1, #mark-2 {
   position: absolute;
 }
 
 #board {
   /* credits given to www.postermywall.com/ for the wooden background */
-  background: center/contain url("./img/background.jpg");
+  width: 450px;
+  height: 500px;
+  background: center/450px 500px no-repeat url('./img/board.svg'),
+      center/contain url("./img/background.jpg");
   padding: 30px 27px;
   border-radius: 1%;
   box-shadow: 7px 7px 5px burlywood;
   border: 3px ridge burlywood;
+  display: grid;
+  grid: repeat(10, 50px) / repeat(9, 50px);
+}
+
+#board > div {
+  width: 50px;
+  height: 50px;
+}
+
+#board > div:hover {
+  box-shadow: inset 5px 5px purple, inset -5px -5px purple;
 }
 
 #board > article {
@@ -32,26 +41,6 @@
   font-weight: bold;
   font-family: 方正字迹-海体楷书繁体, 华文新魏, 隶书, 宋体, sans-serif;
   user-select: none;
-}
-
-#squares {
-  display: flex;
-  flex-wrap: wrap;
-  position: absolute;
-  z-index: 1;
-}
-
-#squares > div {
-  width: 50px;
-  height: 50px;
-}
-
-#squares > div:hover {
-  box-shadow: inset 5px 5px purple, inset -5px -5px purple;
-}
-
-#pieces {
-  z-index: 1;
 }
 
 #pieces > div {
@@ -93,15 +82,15 @@
 #board div.rank-9 {top: 50px;}
 #board div.rank-10 {top: 0px;}
 
-#board div.file-9 {left: 0px}
-#board div.file-8 {left: 50px}
-#board div.file-7 {left: 100px}
-#board div.file-6 {left: 150px}
-#board div.file-5 {left: 200px}
-#board div.file-4 {left: 250px}
-#board div.file-3 {left: 300px}
-#board div.file-2 {left: 350px}
-#board div.file-1 {left: 400px}
+#board div.file-9 {left: 0px;}
+#board div.file-8 {left: 50px;}
+#board div.file-7 {left: 100px;}
+#board div.file-6 {left: 150px;}
+#board div.file-5 {left: 200px;}
+#board div.file-4 {left: 250px;}
+#board div.file-3 {left: 300px;}
+#board div.file-2 {left: 350px;}
+#board div.file-1 {left: 400px;}
 
 #pieces > div.selected {
   filter: drop-shadow(15px 15px 9px rgba(0,0,0,0.4));
@@ -113,11 +102,11 @@
   display: none;
 }
 
-#mark-1 {
+#board > div.markDot {
   background: center/50% url("./img/board/mark-dot.svg") no-repeat;
 }
 
-#mark-2 {
+#board > div.markRing {
   background: center/100% url("./img/board/mark-piece.svg") no-repeat;
 }
 
@@ -125,13 +114,11 @@
   cursor: not-allowed;
 }
 
-#board > p {
+#pieces > p {
   position: absolute;
   z-index: 1;
-
 }
 
 .top-num {
   top: 0;
-
 }
