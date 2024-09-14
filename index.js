@@ -1,27 +1,23 @@
-// TODO: add id to the blocks; move the pieces into the block
-
 'use strict';
 
 (function() {
   window.addEventListener('load', init);
-  let team = 1;
-  const verified = true; // for now all moves are allowed as no rules are considered
 
   function init() {
     populateBoard();
-    let rivalSelector = '.team-' + ((team === 1) ? 2 : 1);
-    let rivalPieces = qsa(rivalSelector);
-    for (let i = 0; i < rivalPieces.length; i++) {
-      rivalPieces[i].classList.add('rival');
-    }
 
     let pieces = qsa('#pieces div');
     for (let i = 0; i < pieces.length; i++) {
-      pieces[i].addEventListener('click', selectPiece);
+      pieces[i].addEventListener('click', (evt) => {
+        // evt.target is the target of the event (selected piece)
+        selectPiece(evt.target);
+      });
     }
     let positions = qsa("#board > div");
     for (let i = 0; i < positions.length; i++) {
-      positions[i].addEventListener('click', selectSquare);
+      positions[i].addEventListener('click', (evt) => {
+        selectSquare(evt.target);
+      });
     }
   }
 
@@ -38,49 +34,47 @@
     }
   }
 
-  function selectPiece(evt) {
-    let selected = evt.target;
-    if (!selected.classList.contains('rival')) {
-      if (selected.classList.contains('selected')) {
+  function isRival(pieceA, pieceB) {
+    if ((!pieceA.classList.contains("team-1") && !pieceA.classList.contains("team-2")) ||
+        (!pieceB.classList.contains("team-1") && !pieceB.classList.contains("team-2"))) {
+      throw new Error("One of the pieces has no teams. Cannot determine rival status.");
+    }
+    let aInOne = pieceA.classList.contains("team-1");
+    let bInOne = pieceB.classList.contains("team-1");
+    return (aInOne && !bInOne) || (!aInOne && bInOne);
+  }
+
+  function selectPiece(target) {
+    let selected = qs('.selected');
+    if (selected) {
+      if (isRival(target, selected)) {
+        let coordinate = getCoordinates(target);
+        target.classList.add('captured');
+        target.classList.replace('file-'+coordinate[1], 'file-0');
+        target.classList.replace('rank-'+coordinate[0], 'rank-0');
+        moveSelected(coordinate);
+      } else if (!target.classList.contains('selected')) {
+        // there is selected & not rival:
+        // if clicked on selected itself, deselect, otherwise change the selected
         selected.classList.remove('selected');
+        target.classList.add('selected');
       } else {
-        if (qs('.selected')) {
-          qs('.selected').classList.remove('selected');
-        }
-        selected.classList.add('selected');
+        selected.classList.remove('selected');
       }
     } else {
-      let coordinate = getCoordinates(evt.target);
-      if (qs('.selected') && verified) {
-        evt.target.classList.add('captured');
-        moveSelected(coordinate[0], coordinate[1]);
-      }
+      target.classList.add('selected');
     }
   }
 
-  function selectSquare(evt) {
-    let squareCoord = evt.target.id.substring(6).split('-');
-    let squareRank = parseInt(squareCoord[0]);
-    let squareFile = parseInt(squareCoord[1]);
-    let pieceInPos = qs(`#pieces > .rank-${squareRank}.file-${squareFile}`);
-    if (qs('.selected')) {
-      if (pieceInPos) {
-        if (pieceInPos.classList.contains('rival')) {
-          pieceInPos.classList.add('captured');
-          moveSelected(squareRank, squareFile);
-        } else if (!pieceInPos.classList.contains('selected')) {
-          qs('.selected').classList.remove('selected');
-          pieceInPos.classList.add('selected');
-        } else {
-          pieceInPos.classList.remove("selected");
-        }
-      } else {
-        moveSelected(squareRank, squareFile);
+  function selectSquare(target) {
+    let squareCoord = target.id.substring(6).split('-');
+    let pieceInPos = qs(`#pieces > .rank-${squareCoord[0]}.file-${squareCoord[1]}`);
+    if (!pieceInPos) {
+      if (qs('.selected')) {
+        moveSelected(squareCoord);
       }
     } else {
-      if (pieceInPos && !pieceInPos.classList.contains('rival')) {
-        pieceInPos.classList.add('selected');
-      }
+      selectPiece(pieceInPos);
     }
   }
 
@@ -100,27 +94,32 @@
     return [rank, file];
   }
 
-  function moveSelected(rank, file) {
-    let previous = qs('.selected');
-    let previousPos = getCoordinates(previous);
+  function moveSelected(endPos) {
+    let selected = qs('.selected');
+    let selectedPos = getCoordinates(selected);
+    makeMove(selectedPos, endPos);
+  }
+
+  // right now startPos must contain a piece
+  function makeMove(startPos, endPos) {
+    let startPiece = qs(`#pieces > .rank-${startPos[0]}.file-${startPos[1]}`);
+
+    // no dot no ring: put the dot and ring.
+    // dot and ring: remove previous dot and ring and add new.
     if (qs(".markDot")) {
       qs(".markDot").classList.remove("markDot");
     }
     if (qs(".markRing")) {
       qs(".markRing").classList.remove("markRing");
     }
-    // no dot no ring: put the dot and ring.
-    // dot and ring: remove previous dot and ring and add new.
-
-    previous.classList.replace('file-'+previousPos[1], 'file-'+file);
-    previous.classList.replace('rank-'+previousPos[0], 'rank-'+rank);
-    id(`square${previousPos[0]}-${previousPos[1]}`).classList.add("markDot");
+    startPiece.classList.replace('file-'+startPos[1], 'file-'+endPos[1]);
+    startPiece.classList.replace('rank-'+startPos[0], 'rank-'+endPos[0]);
+    id(`square${startPos[0]}-${startPos[1]}`).classList.add("markDot");
     setTimeout(() => {
-      previous.classList.remove('selected');
-      id(`square${rank}-${file}`).classList.add("markRing");
+      startPiece.classList.remove('selected');
+      id(`square${endPos[0]}-${endPos[1]}`).classList.add("markRing");
     }, 200);
   }
-
 
   /**
    * Returns the element that has the ID attribute with the specified value.

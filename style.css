@@ -1,4 +1,4 @@
-#board > section, #board > article, #mark-1, #mark-2 {
+#board > section, #mark-1, #mark-2 {
   position: absolute;
 }
 
@@ -23,24 +23,6 @@
 
 #board > div:hover {
   box-shadow: inset 5px 5px purple, inset -5px -5px purple;
-}
-
-#board > article {
-  top: 265px;
-  left: 125px;
-  width: 275px;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 0;
-}
-
-#board > article > span {
-  line-height: 50px;
-  font-size: 30px;
-  font-weight: bold;
-  font-family: 方正字迹-海体楷书繁体, 华文新魏, 隶书, 宋体, sans-serif;
-  user-select: none;
 }
 
 #pieces > div {
@@ -94,7 +76,7 @@
 
 #pieces > div.selected {
   filter: drop-shadow(15px 15px 9px rgba(0,0,0,0.4));
-  transform: rotateX(15deg);
+  transform: scale(0.95) rotateX(20deg);
   z-index: 2;
 }
 
@@ -110,15 +92,7 @@
   background: center/100% url("./img/board/mark-piece.svg") no-repeat;
 }
 
-#pieces:not(:has(.selected)) > div.rival {
+/* TODO: when the piece should not be moved, set cursor to not-allowed */
+/* #pieces:not(:has(.selected)) > div.rival {
   cursor: not-allowed;
-}
-
-#pieces > p {
-  position: absolute;
-  z-index: 1;
-}
-
-.top-num {
-  top: 0;
-}
+} */
